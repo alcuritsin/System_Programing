@@ -35,4 +35,7 @@
 *.out
 *.app
 
+.vs
+[Dd]ebug/
+
 # End of https://www.toptal.com/developers/gitignore/api/c++
