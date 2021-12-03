@@ -149,7 +149,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ico-zilla.ico" />
+    <Image Include="on_fire.ico" />
     <Image Include="Palm-tree.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SPBusy.ani" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

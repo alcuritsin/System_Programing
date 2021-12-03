@@ -56,6 +56,10 @@ IDI_ICON1               ICON                    "Palm-tree.ico"
 
 IDI_ICON2               ICON                    "Ico-zilla.ico"
 
+IDI_ICON3               ICON                    "D:\\YandexDisk\\Академия ШАГ\\System_Programing\\repo\\SP_WinAPI\\SP_WinAPI\\on_fire.ico"
+
+IDI_ICON4               ICON                    "on_fire.ico"
+
 #endif    // Russian (Russia) resources
 /////////////////////////////////////////////////////////////////////////////
 

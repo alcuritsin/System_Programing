@@ -36,5 +36,11 @@
     <Image Include="Ico-zilla.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="on_fire.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SPBusy.ani" />
   </ItemGroup>
 </Project>

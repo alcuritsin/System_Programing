@@ -33,7 +33,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
 	//wc.hIcon = LoadIcon(hInstance, IDI_APPLICATION);					//  иконка окна
 	//wc.hIconSm = LoadIcon(hInstance, IDI_APPLICATION);				//  иконка окна
 
-	wc.hCursor = LoadCursor(hInstance, IDC_ARROW);		//  вид курсора 
+	wc.hCursor = LoadCursorFromFile ("SPBusy.ani");		//  вид курсора - анимированный курсор
+	//wc.hCursor = (HICON) LoadImage(NULL, "on_fire.ico", IMAGE_ICON, 0,0, LR_DEFAULTSIZE | LR_LOADFROMFILE);		//  вид курсора работает
+	//wc.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE( 107));		//  вид курсора !!! не работает
+	//wc.hCursor = LoadCursor(hInstance, IDC_ARROW);		//  вид курсора по умолчанию
 	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);		//  цвет окна
 	wc.lpszClassName = G_SZ_CLASS_NAME;					//  имя класса окна
 	wc.lpszMenuName = NULL;								//  имя меню
@@ -97,7 +100,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 		//Закрывает окно
 	{
-		int answer = MessageBox(hwnd, "Вы действительно хотите закрыть окно?", "Question", MB_ICONWARNING | MB_YESNO);
+		int answer = MessageBox(hwnd, "Вы действительно хотите закрыть окно?", "Question", MB_ICONWARNING | MB_YESNO );
 		if (answer == IDYES)
 		{
 			DestroyWindow(hwnd);
