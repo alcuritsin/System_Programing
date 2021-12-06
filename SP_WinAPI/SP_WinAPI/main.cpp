@@ -1,5 +1,6 @@
 ﻿#include <Windows.h>
 #include"resource.h"
+#include <string>
 
 CONST CHAR G_SZ_CLASS_NAME[] = "MyWindowClass"; //Имя класса окна
 
@@ -125,12 +126,34 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
+	case WM_MOVE:
+	case WM_SIZE:
+	{
+		//Переменная для хранения информации о рпзмерах и координатах окна.
+		RECT rc;
+		GetWindowRect(hwnd, &rc);
+					
+		LONG wWidth = rc.right - rc.left; //  вычисление высоты
+		LONG wHeight = rc.bottom - rc.top; //  вычисление длины
+		std::string wX = std::to_string(rc.left); //  сохранение X координаты верхнего левого угла окна
+		std::string wY = std::to_string(rc.top);  //  сохранение Y координаты верхнего левого угла окна
+
+		//  координаты отличаются от реальных примерно на 8 едениц!!!
+		//  Видимо учитывается какое-то прозрачное поле.
+
+		std::string tMsg = "My Window. Width: " + std::to_string(wWidth) + " Heigth: " + std::to_string(wHeight) + " :: " + wX + "(x), " + wY +"(y)";
+
+		SetWindowText(hwnd, tMsg.c_str());
+
+		break;
+	}
 	case WM_DESTROY:
 		//Деактивирует окно и убирает фокус с указанного окна
 		//Фокус часть окна, которая принимает команды с клавиатуры
 		MessageBox(hwnd, "Ну, и ладно...", "Info", MB_OK);
 		PostQuitMessage(0); //Сигнализирует системе, что поток (процесс) завершается
 		break;
+
 	default:
 		return DefWindowProc(hwnd, uMsg, wParam, lParam);
 		break;
