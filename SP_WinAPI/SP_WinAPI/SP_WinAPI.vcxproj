@@ -148,8 +148,13 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="cursor.png" />
     <Image Include="Ico-zilla.ico" />
     <Image Include="Palm-tree.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mega Man Alternate.cur" />
+    <None Include="Mega Man Working.ani" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

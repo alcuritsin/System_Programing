@@ -102,7 +102,9 @@ ATOM RegisterWindowClass(WNDPROC WndProc, HINSTANCE hInstance)
 	//wc.hIcon = LoadIcon(hInstance, IDI_APPLICATION);					//  иконка окна
 	//wc.hIconSm = LoadIcon(hInstance, IDI_APPLICATION);				//  иконка окна
 
-	wc.hCursor = LoadCursor(hInstance, IDC_ARROW);		//  вид курсора 
+	//wc.hCursor = LoadCursor(hInstance, IDC_ARROW);		//  вид курсора 
+	//wc.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(105));		//  вид курсора 
+	wc.hCursor = LoadCursorFromFile("Mega Man Working.ani");		//  вид курсора 
 	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);		//  цвет окна
 	wc.lpszClassName = G_SZ_CLASS_NAME;					//  имя класса окна
 	wc.lpszMenuName = NULL;								//  имя меню
