@@ -1,7 +1,12 @@
 ﻿#include <Windows.h>
+#include <string>
 #include"resource.h"
 
 CONST CHAR G_SZ_CLASS_NAME[] = "MyWindowClass"; //Имя класса окна
+
+ATOM RegisterWindowClass(WNDPROC WndProc, HINSTANCE hInstance);
+
+HWND CreateWnd(HINSTANCE hInstance);
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -17,6 +22,70 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
 	---
 	*/
 
+	//  1) Регистрация класса окна:
+	if (!RegisterWindowClass(WndProc,hInstance))
+	{
+		DWORD dwMessageID = GetLastError();  //  Получаем код ошибки
+		LPSTR lpBuffer = NULL;	//  Создаём буфер, в который сохраним сообщение об ошибке.
+
+		FormatMessage(
+			FORMAT_MESSAGE_FROM_SYSTEM
+			| FORMAT_MESSAGE_ALLOCATE_BUFFER  //Выделяет память под буфер, в котором будет храниться сообщение об ошибке.
+			| FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL,
+			dwMessageID,
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+			(LPSTR)&lpBuffer,
+			1024,
+			NULL
+		);
+		MessageBox(NULL,lpBuffer, "Error after RegisterWindowClassFunction", MB_OK | MB_ICONERROR);
+		LocalFree(lpBuffer);
+
+		//MessageBox(NULL, "Class registration faild", "Error", MB_OK | MB_ICONERROR);
+		return 0;
+	}
+
+	//  2) Создание окна
+	HWND hwnd = CreateWnd(hInstance);
+	if (hwnd == NULL)
+	{
+		DWORD dwMessageID = GetLastError();  //  Получаем код ошибки
+		LPSTR lpBuffer = NULL;	//  Создаём буфер, в который сохраним сообщение об ошибке.
+
+		FormatMessage(
+			FORMAT_MESSAGE_FROM_SYSTEM
+			| FORMAT_MESSAGE_ALLOCATE_BUFFER  //Выделяет память под буфер, в котором будет храниться сообщение об ошибке.
+			| FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL,
+			dwMessageID,
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+			(LPSTR)&lpBuffer,
+			1024,
+			NULL
+		);
+		MessageBox(NULL, lpBuffer, "Error - WindowCreationFaild", MB_OK | MB_ICONERROR);
+		LocalFree(lpBuffer);
+
+		//MessageBox(NULL, "Window creation faild", "Error", MB_OK | MB_ICONERROR);
+		return 0;
+	}
+
+	ShowWindow(hwnd, nCmdShow);
+	UpdateWindow(hwnd);
+
+	//  3) The message loop
+	MSG msg;	//сообщение
+	while (GetMessageW(&msg, NULL, 0, 0) > 0)
+	{
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
+	}
+	return msg.wParam;
+}
+
+ATOM RegisterWindowClass(WNDPROC WndProc, HINSTANCE hInstance)
+{
 	//  1) Регистрация класса окна:
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);						//  cb - count bytes - Размер окна
@@ -38,13 +107,18 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
 	wc.lpszClassName = G_SZ_CLASS_NAME;					//  имя класса окна
 	wc.lpszMenuName = NULL;								//  имя меню
 
-	if (!RegisterClassEx(&wc))
+	ATOM atom = RegisterClassEx(&wc);
+
+	/*if (!atom)
 	{
 		MessageBox(NULL, "Class registration faild", "Error", MB_OK | MB_ICONERROR);
-		return 0;
-	}
+	}*/
+		return atom;
 
-	//  2) Создание окна
+}
+
+HWND CreateWnd(HINSTANCE hInstance)
+{
 	int screen_width = GetSystemMetrics(SM_CXSCREEN);		//  Получаем разрешение экрана по ширене
 	int screen_heigth = GetSystemMetrics(SM_CYSCREEN);		//  Получаем разрешения экрана по высоте 
 	int window_width = screen_width - screen_width / 4;
@@ -68,23 +142,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
 			NULL					//  lParam
 		);
 
-	if (hwnd == NULL)
-	{
-		MessageBox(NULL, "Window creation faild", "Error", MB_OK | MB_ICONERROR);
-		return 0;
-	}
-
-	ShowWindow(hwnd, nCmdShow);
-	UpdateWindow(hwnd);
-
-	//  3) The message loop
-	MSG msg;	//сообщение
-	while (GetMessageW(&msg, NULL, 0, 0) > 0)
-	{
-		TranslateMessage(&msg);
-		DispatchMessageW(&msg);
-	}
-	return msg.wParam;
+	return hwnd;
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
