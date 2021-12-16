@@ -169,39 +169,38 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{	
 		const int SIZE = 256;
 		char title[SIZE] = {};
-		strcpy(title, G_SZ_CLASS_NAME);
+		//strcpy(title, G_SZ_CLASS_NAME);
 
 		RECT rect;
 		GetWindowRect(hwnd, &rect);
 		int h_size = rect.right - rect.left;
 		int v_size = rect.bottom - rect.top;
 
-		//Преобразуем размеры в строки
-		char sz_h_size[10] = {};
-		char sz_v_size[10] = {};
-		_itoa(h_size, sz_h_size, 10);
-		_itoa(v_size, sz_v_size, 10);
+		////Преобразуем размеры в строки
+		//char sz_h_size[10] = {};
+		//char sz_v_size[10] = {};
+		//_itoa(h_size, sz_h_size, 10);
+		//_itoa(v_size, sz_v_size, 10);
 
-		//Добавляем в строку с заголовком окна:
-		strcat(title, " Size: ");
-		strcat(title, sz_h_size);
-		strcat(title, "x");
-		strcat(title, sz_v_size);
+		////Добавляем в строку с заголовком окна:
+		//strcat(title, " Size: ");
+		//strcat(title, sz_h_size);
+		//strcat(title, "x");
+		//strcat(title, sz_v_size);
 
-		//Добавляем координаты окна
-		char sz_x_pos[10] = {};
-		char sz_y_pos[10] = {};
+		////Добавляем координаты окна
+		//char sz_x_pos[10] = {};
+		//char sz_y_pos[10] = {};
 
-		_itoa(rect.left, sz_x_pos,10);
-		_itoa(rect.top, sz_y_pos,10);
+		//_itoa(rect.left, sz_x_pos,10);
+		//_itoa(rect.top, sz_y_pos,10);
 
-		strcat(title, " Position: ");
-		strcat(title, sz_x_pos);
-		strcat(title, " x ");
-		strcat(title, sz_y_pos);
+		//strcat(title, " Position: ");
+		//strcat(title, sz_x_pos);
+		//strcat(title, " x ");
+		//strcat(title, sz_y_pos);
 
-
-
+		wsprintf(title, "%s Size: %d x %d, Position: %d x %d", G_SZ_CLASS_NAME, h_size, v_size, rect.left, rect.top);
 
 		SetWindowText(hwnd, title);
 	}
